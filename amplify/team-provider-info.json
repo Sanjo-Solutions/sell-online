@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sellonline-dev-465ef-authRole",
+      "UnauthRoleArn": "arn:aws:iam::543098890276:role/amplify-sellonline-dev-465ef-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::543098890276:role/amplify-sellonline-dev-465ef-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-sellonline-dev-465ef-deployment",
+      "UnauthRoleName": "amplify-sellonline-dev-465ef-unauthRole",
+      "StackName": "amplify-sellonline-dev-465ef",
+      "StackId": "arn:aws:cloudformation:eu-central-1:543098890276:stack/amplify-sellonline-dev-465ef/d33844f0-54ec-11ef-a49a-06c6cb3f9f5d",
+      "AmplifyAppId": "d3h7bharo5cvn0"
+    }
+  }
+}

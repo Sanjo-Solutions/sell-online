@@ -1,0 +1,622 @@
+{
+ "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"AmplifySandbox\",\"createdWith\":\"1.0.4\",\"stackType\":\"custom\",\"metadata\":{}}",
+ "Resources": {
+  "HttpApiF5A9A8A7": {
+   "Type": "AWS::ApiGatewayV2::Api",
+   "Properties": {
+    "CorsConfiguration": {
+     "AllowHeaders": [
+      "*"
+     ],
+     "AllowMethods": [
+      "POST"
+     ],
+     "AllowOrigins": [
+      "*"
+     ]
+    },
+    "Name": "API",
+    "ProtocolType": "HTTP",
+    "Tags": {
+     "amplify:deployment-type": "sandbox",
+     "created-by": "amplify"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/Resource"
+   }
+  },
+  "HttpApiDefaultStage3EEB07D6": {
+   "Type": "AWS::ApiGatewayV2::Stage",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "AutoDeploy": true,
+    "StageName": "$default",
+    "Tags": {
+     "amplify:deployment-type": "sandbox",
+     "created-by": "amplify"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/DefaultStage/Resource"
+   }
+  },
+  "HttpApiPOSTconnectedaccountConnectedAccountLambdaIntegrationA2A42E95": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionconnectedaccountlambda02DB65D5Arn"
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--connected-account/ConnectedAccountLambdaIntegration/Resource"
+   }
+  },
+  "HttpApiPOSTconnectedaccountConnectedAccountLambdaIntegrationPermissionBF8A0144": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionconnectedaccountlambda02DB65D5Arn"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "HttpApiF5A9A8A7"
+       },
+       "/*/*/connected-account"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--connected-account/ConnectedAccountLambdaIntegration-Permission"
+   }
+  },
+  "HttpApiPOSTconnectedaccountB1EB7685": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "POST /connected-account",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "HttpApiPOSTconnectedaccountConnectedAccountLambdaIntegrationA2A42E95"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--connected-account/Resource"
+   }
+  },
+  "HttpApiPOSTaccountlinkAccountLinkLambdaIntegrationF63D7D40": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionaccountlinklambdaAE23F3E1Arn"
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--account-link/AccountLinkLambdaIntegration/Resource"
+   }
+  },
+  "HttpApiPOSTaccountlinkAccountLinkLambdaIntegrationPermission380BB211": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionaccountlinklambdaAE23F3E1Arn"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "HttpApiF5A9A8A7"
+       },
+       "/*/*/account-link"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--account-link/AccountLinkLambdaIntegration-Permission"
+   }
+  },
+  "HttpApiPOSTaccountlinkEFA72925": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "POST /account-link",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "HttpApiPOSTaccountlinkAccountLinkLambdaIntegrationF63D7D40"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--account-link/Resource"
+   }
+  },
+  "HttpApiPOSTcheckoutCheckoutLambdaIntegration27BF95D2": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctioncheckoutlambdaA0D0C9EDArn"
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--checkout/CheckoutLambdaIntegration/Resource"
+   }
+  },
+  "HttpApiPOSTcheckoutCheckoutLambdaIntegrationPermission89DF550D": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Ref": "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctioncheckoutlambdaA0D0C9EDArn"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "HttpApiF5A9A8A7"
+       },
+       "/*/*/checkout"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--checkout/CheckoutLambdaIntegration-Permission"
+   }
+  },
+  "HttpApiPOSTcheckoutDCB05987": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "HttpApiF5A9A8A7"
+    },
+    "AuthorizationType": "AWS_IAM",
+    "RouteKey": "POST /checkout",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "HttpApiPOSTcheckoutCheckoutLambdaIntegration27BF95D2"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/HttpApi/POST--checkout/Resource"
+   }
+  },
+  "ApiPolicyCAC1D6D8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "execute-api:Invoke",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":execute-api:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":",
+           {
+            "Ref": "HttpApiF5A9A8A7"
+           },
+           "/*/*/connected-account"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":execute-api:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":",
+           {
+            "Ref": "HttpApiF5A9A8A7"
+           },
+           "/*/*/account-link"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":execute-api:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":",
+           {
+            "Ref": "HttpApiF5A9A8A7"
+           },
+           "/*/*/checkout"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiPolicyCAC1D6D8",
+    "Roles": [
+     {
+      "Ref": "referencetoamplifysellonlineIsandbox33110668bbauthNestedStackauthNestedStackResource157A26FBOutputsamplifysellonlineIsandbox33110668bbauthamplifyAuthauthenticatedUserRoleD19807A7Ref"
+     },
+     {
+      "Ref": "referencetoamplifysellonlineIsandbox33110668bbauthNestedStackauthNestedStackResource157A26FBOutputsamplifysellonlineIsandbox33110668bbauthamplifyAuthunauthenticatedUserRoleD4FA6C90Ref"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/ApiPolicy/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12NvQ6DMAyEn4UdXEBq94qlXSoED1AZYpD5SRAxIITy7lVg63Tfnc92Csk9gTjAzUa16qOBKzg+ZIVUKVj3IW72e+DELQptuK8pHC+R6TlxmDXai7elYEs+uMBHhVnkorcWamcUNtpX/uzZc+GAY6UQskbnNI9srR8zjnDkZuB699WLnDvXyJplrs+nmdGK/T0XaqMIOntb0xiSB8RBZ5mjedHCI0Fx6Q/162Bu9QAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/api-stack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionconnectedaccountlambda02DB65D5Arn": {
+   "Type": "String"
+  },
+  "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctionaccountlinklambdaAE23F3E1Arn": {
+   "Type": "String"
+  },
+  "referencetoamplifysellonlineIsandbox33110668bbfunctionNestedStackfunctionNestedStackResource366018C2OutputsamplifysellonlineIsandbox33110668bbfunctioncheckoutlambdaA0D0C9EDArn": {
+   "Type": "String"
+  },
+  "referencetoamplifysellonlineIsandbox33110668bbauthNestedStackauthNestedStackResource157A26FBOutputsamplifysellonlineIsandbox33110668bbauthamplifyAuthauthenticatedUserRoleD19807A7Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifysellonlineIsandbox33110668bbauthNestedStackauthNestedStackResource157A26FBOutputsamplifysellonlineIsandbox33110668bbauthamplifyAuthunauthenticatedUserRoleD4FA6C90Ref": {
+   "Type": "String"
+  }
+ },
+ "Outputs": {
+  "amplifysellonlineIsandbox33110668bbapistackHttpApi10DEDBA6Ref": {
+   "Value": {
+    "Ref": "HttpApiF5A9A8A7"
+   }
+  }
+ }
+}

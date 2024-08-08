@@ -1,0 +1,123 @@
+{
+  "auth": {
+    "user_pool_id": "eu-central-1_9Y3eyBQe7",
+    "aws_region": "eu-central-1",
+    "user_pool_client_id": "7b9n60atp2ntstnr6239p84im5",
+    "identity_pool_id": "eu-central-1:2d5a9bc4-f2cf-40bf-a422-18085574a2b2",
+    "mfa_methods": [],
+    "standard_required_attributes": [
+      "email"
+    ],
+    "username_attributes": [
+      "email"
+    ],
+    "user_verification_types": [
+      "email"
+    ],
+    "mfa_configuration": "NONE",
+    "password_policy": {
+      "min_length": 8,
+      "require_lowercase": true,
+      "require_numbers": true,
+      "require_symbols": true,
+      "require_uppercase": true
+    },
+    "unauthenticated_identities_enabled": true
+  },
+  "data": {
+    "url": "https://ze4umiobpnbqvns5xyt3eiwcr4.appsync-api.eu-central-1.amazonaws.com/graphql",
+    "aws_region": "eu-central-1",
+    "api_key": "da2-66hujbxej5axdfuiaaxuwlcfmm",
+    "default_authorization_type": "API_KEY",
+    "authorization_types": [
+      "AMAZON_COGNITO_USER_POOLS",
+      "AWS_IAM"
+    ],
+    "model_introspection": {
+      "version": 1,
+      "models": {
+        "Todo": {
+          "name": "Todo",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "content": {
+              "name": "content",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Todos",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        }
+      },
+      "enums": {},
+      "nonModels": {}
+    }
+  },
+  "storage": {
+    "aws_region": "eu-central-1",
+    "bucket_name": "amplify-sellonline-i-sandbox-3-filesbucket23e7585d-ai2f8rkujdli"
+  },
+  "version": "1",
+  "custom": {
+    "API": {
+      "API": {
+        "endpoint": "https://ck6iy63yme.execute-api.eu-central-1.amazonaws.com/",
+        "region": "eu-central-1",
+        "apiName": "API"
+      }
+    }
+  }
+}
