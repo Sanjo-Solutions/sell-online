@@ -9,25 +9,13 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
 
   if (event.requestContext.http.method === 'POST') {
     try {
-      const account = await stripe.accounts.create({
-        controller: {
-          stripe_dashboard: {
-            type: 'express',
-          },
-          fees: {
-            payer: 'application',
-          },
-          losses: {
-            payments: 'application',
-          },
-        },
-      })
+      const account = await stripe.accounts.create()
 
       return {
         statusCode: 200,
         body: JSON.stringify({ account: account.id }),
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(
         'An error occurred when calling the Stripe API to create an account:',
         error

@@ -67,7 +67,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1725725634
+    "Expires": 1725825721
    },
    "Metadata": {
     "aws:cdk:path": "amplify-sellonline-I-sandbox-33110668bb/data/amplifyData/GraphQLAPI/DefaultApiKey"

@@ -256,7 +256,7 @@
     "ApiId": {
      "Ref": "HttpApiF5A9A8A7"
     },
-    "AuthorizationType": "AWS_IAM",
+    "AuthorizationType": "NONE",
     "RouteKey": "POST /checkout",
     "Target": {
      "Fn::Join": [

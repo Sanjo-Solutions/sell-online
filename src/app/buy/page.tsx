@@ -1,6 +1,10 @@
+import outputs from '../../../amplify_outputs.json'
+
 export default function () {
   return (
-    <div
+    <form
+      action={`${outputs.custom.API.API.endpoint}checkout`}
+      method='POST'
       style={{
         height: '100vh',
         display: 'flex',
@@ -8,7 +12,9 @@ export default function () {
         alignItems: 'center',
       }}
     >
-      <button className='btn btn-primary btn-lg'>Buy</button>
-    </div>
+      <button type='submit' className='btn btn-primary btn-lg'>
+        Buy
+      </button>
+    </form>
   )
 }

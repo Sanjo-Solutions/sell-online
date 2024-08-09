@@ -24,7 +24,7 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
           url: accountLink.url,
         }),
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(
         'An error occurred when calling the Stripe API to create an account link:',
         error

@@ -81,7 +81,6 @@ httpApi.addRoutes({
   path: '/checkout',
   methods: [HttpMethod.POST],
   integration: checkoutHttpLambdaIntegration,
-  authorizer: iamAuthorizer,
 })
 
 const apiPolicy = new Policy(apiStack, 'ApiPolicy', {
