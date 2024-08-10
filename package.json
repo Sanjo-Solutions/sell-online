@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.2.12",
     "@aws-amplify/ui-react": "^6.1.14",
     "@aws-amplify/ui-react-storage": "^3.1.6",
     "@popperjs/core": "^2.11.8",
