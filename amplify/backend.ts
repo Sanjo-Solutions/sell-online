@@ -9,40 +9,27 @@ import {
   HttpApi,
   HttpMethod,
 } from 'aws-cdk-lib/aws-apigatewayv2'
-import {
-  HttpIamAuthorizer,
-  HttpUserPoolAuthorizer,
-} from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
+import { HttpUserPoolAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers'
 import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations'
 import { Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam'
-import { connectedAccount } from './functions/connected-account/resource.js'
 import { accountLink } from './functions/account-link/resource.js'
 
 const backend = defineBackend({
   auth,
   data,
   storage,
-  connectedAccount,
   accountLink,
   checkout,
 })
 
 const apiStack = backend.createStack('api-stack')
 
-const iamAuthorizer = new HttpIamAuthorizer()
-
-// create a User Pool authorizer
 const userPoolAuthorizer = new HttpUserPoolAuthorizer(
   'userPoolAuth',
   backend.auth.resources.userPool,
   {
     userPoolClients: [backend.auth.resources.userPoolClient],
   }
-)
-
-const connectedAccountHttpLambdaIntegration = new HttpLambdaIntegration(
-  'ConnectedAccountLambdaIntegration',
-  backend.connectedAccount.resources.lambda
 )
 
 const accountLinkHttpLambdaIntegration = new HttpLambdaIntegration(
@@ -66,15 +53,10 @@ const httpApi = new HttpApi(apiStack, 'HttpApi', {
 })
 
 httpApi.addRoutes({
-  path: '/connected-account',
-  methods: [HttpMethod.POST],
-  integration: connectedAccountHttpLambdaIntegration,
-})
-
-httpApi.addRoutes({
   path: '/account-link',
   methods: [HttpMethod.POST],
   integration: accountLinkHttpLambdaIntegration,
+  authorizer: userPoolAuthorizer,
 })
 
 httpApi.addRoutes({
@@ -88,7 +70,6 @@ const apiPolicy = new Policy(apiStack, 'ApiPolicy', {
     new PolicyStatement({
       actions: ['execute-api:Invoke'],
       resources: [
-        `${httpApi.arnForExecuteApi('*', '/connected-account')}`,
         `${httpApi.arnForExecuteApi('*', '/account-link')}`,
         `${httpApi.arnForExecuteApi('*', '/checkout')}`,
       ],

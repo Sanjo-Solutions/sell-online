@@ -25,7 +25,7 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
         payment_intent_data: {
           application_fee_amount: 123,
           transfer_data: {
-            destination: 'acct_1PlyF5E4ePfdP6zT', // TODO: Dynamic based on from which connected account the product is from.
+            destination: 'acct_1PmeZ8EPOGRKLFzV', // TODO: Dynamic based on from which connected account the product is from.
           },
         },
         mode: 'payment',

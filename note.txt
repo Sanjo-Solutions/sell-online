@@ -1,0 +1,4 @@
+
+AWS4-HMAC-SHA256 Credential=ASIAX44ZXNASPQHTUKZD/20240811/eu-central-1/execute-api/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-security-token, Signature=9ef57b93de4465ee3be15889f201314996639693df282e32d4c934e053807108
+
+AWS4-HMAC-SHA256 Credential=ASIAX44ZXNASNVMKUAEY/20240811/eu-central-1/execute-api/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-security-token, Signature=77809771dcb75b5cb1713405397793df7a27c297a65238b06dd032c14f3c145e

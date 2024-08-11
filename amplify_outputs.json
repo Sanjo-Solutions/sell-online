@@ -27,27 +27,32 @@
   "data": {
     "url": "https://ze4umiobpnbqvns5xyt3eiwcr4.appsync-api.eu-central-1.amazonaws.com/graphql",
     "aws_region": "eu-central-1",
-    "api_key": "da2-66hujbxej5axdfuiaaxuwlcfmm",
-    "default_authorization_type": "API_KEY",
+    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
-      "AMAZON_COGNITO_USER_POOLS",
       "AWS_IAM"
     ],
     "model_introspection": {
       "version": 1,
       "models": {
-        "Todo": {
-          "name": "Todo",
+        "UserProfile": {
+          "name": "UserProfile",
           "fields": {
             "id": {
               "name": "id",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true,
               "attributes": []
             },
-            "content": {
-              "name": "content",
+            "email": {
+              "name": "email",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "stripeAccountID": {
+              "name": "stripeAccountID",
               "isArray": false,
               "type": "String",
               "isRequired": false,
@@ -71,25 +76,32 @@
             }
           },
           "syncable": true,
-          "pluralName": "Todos",
+          "pluralName": "UserProfiles",
           "attributes": [
             {
               "type": "model",
               "properties": {}
             },
             {
+              "type": "key",
+              "properties": {
+                "fields": [
+                  "id"
+                ]
+              }
+            },
+            {
               "type": "auth",
               "properties": {
                 "rules": [
                   {
-                    "allow": "public",
-                    "provider": "apiKey",
+                    "provider": "userPools",
+                    "ownerField": "id",
+                    "allow": "owner",
                     "operations": [
-                      "create",
-                      "update",
-                      "delete",
                       "read"
-                    ]
+                    ],
+                    "identityClaim": "cognito:username"
                   }
                 ]
               }
