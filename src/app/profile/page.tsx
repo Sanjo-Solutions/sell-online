@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { post } from 'aws-amplify/api'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 import { generateClient } from 'aws-amplify/data'
 import { type Schema } from '../../../amplify/data/resource'
+import { generateIdentifier } from '@/user/generateIdentifier'
 
 const client = generateClient<Schema>()
 
@@ -26,7 +27,7 @@ export default function Home() {
   useEffect(
     function () {
       async function a() {
-        const profileOwner = `${user.userId}::${user.username}`
+        const profileOwner = generateIdentifier(user)
 
         const { data: profile, errors } = await client.models.UserProfile.get(
           {
@@ -49,24 +50,41 @@ export default function Home() {
     [user]
   )
 
+  const onSubmit = useCallback(
+    async function onSubmit(event) {
+      event.preventDefault()
+      const form = event.target
+      const isValid = form.checkValidity()
+      if (!isValid) {
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+      if (isValid) {
+        const formData = new FormData(form)
+        const slug = formData.get('slug')?.toString()
+        const { data, errors } = await client.models.UserProfile.update(
+          {
+            id: generateIdentifier(user),
+            slug,
+          },
+          {
+            authMode: 'userPool',
+          }
+        )
+        debugger
+      }
+    },
+    [user]
+  )
+
   return (
-    <div className='container'>
-      <div className='banner'>
-        <h2>Sanjo Solutions UG (haftungsbeschränkt)</h2>
-      </div>
-      <div className='content'>
-        {connectedAccountId && (
-          <h2>Add information to start accepting money</h2>
-        )}
-        {connectedAccountId && (
-          <p>
-            Sanjo Solutions UG (haftungsbeschränkt) partners with Stripe to help
-            you receive payments while keeping your personal and bank details
-            secure.
-          </p>
-        )}
+    <>
+      <h2>Profile</h2>
+
+      <div>
         {connectedAccountId && !accountLinkCreatePending && (
           <button
+            className='btn btn-secondary mb-3'
             onClick={async () => {
               setAccountLinkCreatePending(true)
               setError(false)
@@ -84,7 +102,6 @@ export default function Home() {
                 },
               })
               const response = await operation.response
-              console.log('response', response)
               const json = await response.body.json()
               setAccountLinkCreatePending(false)
               const { url, error } = json
@@ -100,34 +117,32 @@ export default function Home() {
             Add information
           </button>
         )}
-        {error && <p className='error'>Something went wrong!</p>}
-        {(connectedAccountId ||
-          accountCreatePending ||
-          accountLinkCreatePending) && (
-          <div className='dev-callout'>
-            {connectedAccountId && (
-              <p>
-                Your connected account ID is:{' '}
-                <code className='bold'>{connectedAccountId}</code>
-              </p>
-            )}
-            {accountCreatePending && <p>Creating a connected account...</p>}
-            {accountLinkCreatePending && <p>Creating a new Account Link...</p>}
-          </div>
-        )}
-        <div className='info-callout'>
-          <p>
-            This is a sample app for Stripe-hosted Connect onboarding.{' '}
-            <a
-              href='https://docs.stripe.com/connect/onboarding/quickstart?connect-onboarding-surface=hosted'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              View docs
-            </a>
-          </p>
-        </div>
       </div>
-    </div>
+
+      <form onSubmit={onSubmit} noValidate>
+        <div className='mb-3'>
+          <label htmlFor='slug' className='form-label'>
+            Profile slug
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            id='slug'
+            name='slug'
+            aria-describedby='slugHelpBlock'
+            required
+          />
+          <div id='slugHelpBlock' className='form-text'>
+            The path to your profile: www.sell-online.com/&lt;slug&gt;
+          </div>
+        </div>
+
+        <div className='text-end'>
+          <button type='submit' className='btn btn-primary'>
+            Save
+          </button>
+        </div>
+      </form>
+    </>
   )
 }

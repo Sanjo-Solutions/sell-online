@@ -1,0 +1,3 @@
+.is-invalid .amplify-storagemanager__dropzone {
+  border-color: var(--bs-form-invalid-border-color);
+}

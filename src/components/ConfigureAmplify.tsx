@@ -4,6 +4,9 @@ import { Amplify } from 'aws-amplify'
 import outputs from '../../amplify_outputs.json'
 import { fetchAuthSession } from 'aws-amplify/auth'
 import { useEffect } from 'react'
+import { Hub } from 'aws-amplify/utils'
+
+const defaultLibraryOptions = { ssr: true }
 
 Amplify.configure(outputs, { ssr: true })
 const existingConfig = Amplify.getConfig()
@@ -15,18 +18,21 @@ Amplify.configure(
       REST: outputs.custom.API,
     },
   },
-  { ssr: true }
+  { ...defaultLibraryOptions }
 )
 
 export function ConfigureAmplifyClientSide() {
   useEffect(function () {
-    async function a() {
+    async function updateAuthorization() {
       const session = await fetchAuthSession()
       const authToken = session.tokens?.idToken?.toString()
 
-      Amplify.configure(Amplify.getConfig(), {
-        ssr: true,
-        API: {
+      const libraryOptions: any = {
+        ...defaultLibraryOptions,
+      }
+
+      if (authToken) {
+        libraryOptions.API = {
           REST: {
             headers: async () => {
               return {
@@ -34,11 +40,21 @@ export function ConfigureAmplifyClientSide() {
               }
             },
           },
-        },
-      })
+        }
+      }
+
+      Amplify.configure(Amplify.getConfig(), libraryOptions)
     }
 
-    a()
+    updateAuthorization()
+
+    const hubListenerCancelToken = Hub.listen('auth', () => {
+      updateAuthorization()
+    })
+
+    return () => {
+      hubListenerCancelToken()
+    }
   }, [])
 
   return null

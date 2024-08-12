@@ -9,7 +9,13 @@ export function LayoutInner({ children }) {
     <Authenticator.Provider>
       <Navigation />
 
-      {children}
+      <main className='flex-shrink-0'>
+        <div className='container mt-3' style={{ paddingTop: '60px' }}>
+          {children}
+        </div>
+      </main>
+
+      <Footer />
     </Authenticator.Provider>
   )
 }
@@ -21,14 +27,12 @@ function Navigation() {
     user,
   ])
 
-  console.log('user', user)
-
   return (
-    <nav className='navbar navbar-expand-lg bg-body-tertiary'>
-      <div className='container-fluid'>
-        <a className='navbar-brand' href='#'>
+    <nav className='navbar navbar-expand-md bg-body-tertiary fixed-top'>
+      <div className='container'>
+        <Link className='navbar-brand' href='/'>
           Sell online
-        </a>
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -49,7 +53,31 @@ function Navigation() {
                   aria-current='page'
                   href='/sign-up'
                 >
-                  Sign up as seller
+                  Sign up as goods supplier
+                </Link>
+              </li>
+            )}
+
+            {user && (
+              <li className='nav-item'>
+                <Link
+                  className='nav-link active'
+                  aria-current='page'
+                  href='/profile'
+                >
+                  Profile
+                </Link>
+              </li>
+            )}
+
+            {user && (
+              <li className='nav-item'>
+                <Link
+                  className='nav-link active'
+                  aria-current='page'
+                  href='/supply-good'
+                >
+                  Supply good
                 </Link>
               </li>
             )}
@@ -73,5 +101,21 @@ function Navigation() {
         </div>
       </div>
     </nav>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className='py-3 my-4 mt-auto'>
+      <div className='container border-top d-flex flex-wrap justify-content-between align-items-center'>
+        <ul className='nav col justify-content-end'>
+          <li className='nav-item'>
+            <Link href='/credits' className='nav-link px-2 text-body-secondary'>
+              Credits
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </footer>
   )
 }

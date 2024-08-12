@@ -18,8 +18,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
+    <html lang='en' className='h-100'>
+      <body className={`${inter.className} d-flex flex-column h-100`}>
         <ConfigureAmplifyClientSide />
         <LayoutInner>{children}</LayoutInner>
       </body>
