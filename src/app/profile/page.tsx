@@ -10,7 +10,8 @@ import { generateIdentifier } from '@/user/generateIdentifier'
 const client = generateClient<Schema>()
 
 export default function Home() {
-  const [accountCreatePending, setAccountCreatePending] = useState(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [profile, setProfile] = useState<any>(null)
   const [accountLinkCreatePending, setAccountLinkCreatePending] =
     useState(false)
   const [error, setError] = useState(false)
@@ -38,8 +39,12 @@ export default function Home() {
           }
         )
 
-        if (profile?.stripeAccountID) {
-          setConnectedAccountId(profile.stripeAccountID)
+        if (profile) {
+          if (profile?.stripeAccountID) {
+            setConnectedAccountId(profile.stripeAccountID)
+          }
+          setProfile(profile)
+          setIsLoading(false)
         }
       }
 
@@ -71,7 +76,6 @@ export default function Home() {
             authMode: 'userPool',
           }
         )
-        debugger
       }
     },
     [user]
@@ -131,6 +135,8 @@ export default function Home() {
             name='slug'
             aria-describedby='slugHelpBlock'
             required
+            defaultValue={profile?.slug}
+            disabled={isLoading}
           />
           <div id='slugHelpBlock' className='form-text'>
             The path to your profile: www.sell-online.com/&lt;slug&gt;
